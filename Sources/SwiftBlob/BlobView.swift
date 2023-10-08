@@ -32,7 +32,7 @@ public struct BlobView: View {
             }
     }
 
-    static func getPoints(for spikyness: Double) -> AnimatableCGPointVector {
+    public static func getPoints(for spikyness: Double) -> AnimatableCGPointVector {
         let minGrowth = Int(10 - (spikyness * 10))
         let edges = max(4, Int(spikyness * 50))
         return BlobShape.createPoints(minGrowth: minGrowth, edges: edges)
