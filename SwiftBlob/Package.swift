@@ -11,10 +11,6 @@ let package = Package(
             targets: ["SwiftBlob"]),
     ],
     targets: [
-        .target(
-            name: "SwiftBlob"),
-        .testTarget(
-            name: "SwiftBlobTests",
-            dependencies: ["SwiftBlob"]),
+        .target(name: "SwiftBlob")
     ]
 )
