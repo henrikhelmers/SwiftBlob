@@ -10,10 +10,14 @@ public struct BlobView: View {
 
     @State private var points: AnimatableCGPointVector
 
-    public init(spikyness: Double = 0.1, isAnimated: Bool = true) {
+    public init(spikyness: Double = 0.1, isAnimated: Bool = true, points: AnimatableCGPointVector? = nil) {
         self.spikyness = spikyness
         self.isAnimated = isAnimated
-        self.points = BlobView.getPoints(for: spikyness)
+        if let points {
+            self.points = points
+        } else {
+            self.points = BlobView.getPoints(for: spikyness)
+        }
     }
 
     public var body: some View {
