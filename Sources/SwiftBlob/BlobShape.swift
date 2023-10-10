@@ -9,9 +9,9 @@ struct BlobShape: Shape {
         set { controlPoints = newValue }
     }
 
-    static func createPoints(minGrowth: Int, edges: Int) -> AnimatableCGPointVector {
+    static func createPoints(minGrowth: CGFloat, edges: Int) -> AnimatableCGPointVector {
         let outerRadius = size / 2
-        let innerRadius = CGFloat(minGrowth) * (outerRadius / 10)
+        let innerRadius = minGrowth * (outerRadius / 10)
         let center = size / 2
         let slices = divide(count: edges)
         let points: [CGPoint] = slices.map {
@@ -64,7 +64,7 @@ struct BlobShape: Shape {
 
     static private func point(origin: CGFloat, radius: CGFloat, angle: Angle) -> CGPoint {
         let radians = CGFloat(angle.radians)
-        return CGPoint(
+        return .init(
             x: (origin + radius * cos(radians)).rounded(),
             y: (origin + radius * sin(radians)).rounded()
         )
@@ -74,6 +74,6 @@ struct BlobShape: Shape {
 
 private extension CGPoint {
     func scale(x xScale: CGFloat, y yScale: CGFloat) -> CGPoint {
-        CGPoint(x: x * xScale, y: y * yScale)
+        .init(x: x * xScale, y: y * yScale)
     }
 }

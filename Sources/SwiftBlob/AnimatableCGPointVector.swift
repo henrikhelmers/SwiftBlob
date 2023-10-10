@@ -9,7 +9,7 @@ public struct AnimatableCGPointVector: VectorArithmetic, Sendable {
         let values = zip(lhs.values, rhs.values)
             .map { lhs, rhs in lhs.animatableData - rhs.animatableData }
             .map { CGPoint(x: $0.first, y: $0.second) }
-        return AnimatableCGPointVector(values: values)
+        return .init(values: values)
     }
 
     public static func -= (lhs: inout AnimatableCGPointVector, rhs: AnimatableCGPointVector) {
@@ -22,7 +22,7 @@ public struct AnimatableCGPointVector: VectorArithmetic, Sendable {
         let values = zip(lhs.values, rhs.values)
             .map { lhs, rhs in lhs.animatableData + rhs.animatableData }
             .map { CGPoint(x: $0.first, y: $0.second) }
-        return AnimatableCGPointVector(values: values)
+        return .init(values: values)
     }
 
     public static func += (lhs: inout AnimatableCGPointVector, rhs: AnimatableCGPointVector) {
