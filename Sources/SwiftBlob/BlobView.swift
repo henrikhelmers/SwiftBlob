@@ -41,10 +41,12 @@ public struct BlobView: View {
 
 #Preview {
     ZStack {
-        Color.gray
+        Color.black
             .ignoresSafeArea()
-        BlobView(spikyness: 0.1, isAnimated: true)
+        BlobView(spikyness: 0.3, isAnimated: true)
             .foregroundColor(.white)
+        BlobView(spikyness: 0.9, isAnimated: true)
+            .foregroundColor(.yellow)
     }
     .frame(width: 300, height: 300)
 }

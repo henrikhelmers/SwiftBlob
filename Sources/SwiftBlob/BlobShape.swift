@@ -10,26 +10,26 @@ struct BlobShape: Shape {
     }
 
     static func createPoints(minGrowth: Int, edges: Int) -> AnimatableCGPointVector {
-        let outerRadius = Self.size / 2
+        let outerRadius = size / 2
         let innerRadius = CGFloat(minGrowth) * (outerRadius / 10)
-        let center = Self.size / 2
+        let center = size / 2
         let slices = divide(count: edges)
-        let points: [CGPoint] = slices.map { degree in
-            let radius = magicPoint(value: CGFloat.random(in: 0...1), min: innerRadius, max: outerRadius)
-            return point(origin: center, radius: radius, degree: degree)
+        let points: [CGPoint] = slices.map {
+            let radius = magicPoint(value: .random(in: 0...1), min: innerRadius, max: outerRadius)
+            return point(origin: center, radius: radius, angle: .init(degrees: $0))
         }
         return AnimatableCGPointVector(values: points)
     }
 
     func path(in rect: CGRect) -> Path {
-        guard controlPoints.values.count > 1 else {
-            return Path()
-        }
         var path = Path()
+        guard controlPoints.values.count > 1 else {
+            return path
+        }
         let xScale = rect.width / Self.size
         let yScale = rect.height / Self.size
-        let scaledPoints = controlPoints.values.map { point in
-            point.scale(x: xScale, y: yScale)
+        let scaledPoints = controlPoints.values.map {
+            $0.scale(x: xScale, y: yScale)
         }
 
         path.move(to: CGPoint(x: (scaledPoints[0].x + scaledPoints[1].x) / 2,
@@ -45,11 +45,7 @@ struct BlobShape: Shape {
 
         return path
     }
-
-    static private func toRad(_ degree: CGFloat) -> CGFloat {
-        Angle(degrees: degree).radians
-    }
-
+    
     static private func divide(count: Int) -> [CGFloat] {
         (0..<count).map {
             CGFloat($0) * (360 / CGFloat(count))
@@ -66,16 +62,17 @@ struct BlobShape: Shape {
         return radius
     }
 
-    static private func point(origin: CGFloat, radius: CGFloat, degree: CGFloat) -> CGPoint {
-        CGPoint(
-            x: (origin + radius * cos(toRad(degree))).rounded(),
-            y: (origin + radius * sin(toRad(degree))).rounded()
+    static private func point(origin: CGFloat, radius: CGFloat, angle: Angle) -> CGPoint {
+        let radians = CGFloat(angle.radians)
+        return CGPoint(
+            x: (origin + radius * cos(radians)).rounded(),
+            y: (origin + radius * sin(radians)).rounded()
         )
     }
 
 }
 
-fileprivate extension CGPoint {
+private extension CGPoint {
     func scale(x xScale: CGFloat, y yScale: CGFloat) -> CGPoint {
         CGPoint(x: x * xScale, y: y * yScale)
     }

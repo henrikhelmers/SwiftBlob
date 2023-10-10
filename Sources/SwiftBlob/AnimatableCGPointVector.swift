@@ -2,7 +2,7 @@
 
 import SwiftUI
 
-public struct AnimatableCGPointVector: VectorArithmetic {
+public struct AnimatableCGPointVector: VectorArithmetic, Sendable {
     public static var zero = AnimatableCGPointVector(values: [.zero])
 
     public static func - (lhs: AnimatableCGPointVector, rhs: AnimatableCGPointVector) -> AnimatableCGPointVector {
